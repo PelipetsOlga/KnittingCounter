@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">Knitting Counter</string>
+  <string name="tv_counter">Counter:</string>
+  <string name="set_counter">Set counter</string>
+  <string name="_1">-1</string>
+  <string name="set_0">Set 0</string>
+  <string name="change_side">Change side</string>
+</resources>
