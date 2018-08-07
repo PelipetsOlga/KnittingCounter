@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
     tvCounter = findViewById(R.id.tv_counter)
     arrowForward = findViewById(R.id.arrow_forward)
     arrowBack = findViewById(R.id.arrow_back)
-    seekBarView!!!!.setOnSeekBarChangeListener(this);
+    seekBarView?.setOnSeekBarChangeListener(this);
   }
 
   override fun onResume() {
@@ -56,10 +56,10 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
   }
 
   override fun onPause() {
-    App.prefs!!.prefCounter = counter
-    App.prefs!!.prefCurrentProgress = currentProgress
-    App.prefs!!.prefOldProgress = oldProgress
-    App.prefs!!.prefDirection = direction
+    App.prefs?.prefCounter = counter
+    App.prefs?.prefCurrentProgress = currentProgress
+    App.prefs?.prefOldProgress = oldProgress
+    App.prefs?.prefDirection = direction
     super.onPause()
   }
 
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
     var newProgress = seekBar?.progress
     if (direction == FROM_LEFT_TO_RIGHT) {
       if (newProgress!! > oldProgress) {
-        if (newProgress!! > RIGHT_EDGE) {
+        if (newProgress > RIGHT_EDGE) {
           oldProgress = 100
           seekBarView?.setProgress(oldProgress)
           setArrowView(FROM_RIGHT_TO_LEFT)

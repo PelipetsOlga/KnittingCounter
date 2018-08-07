@@ -26,29 +26,29 @@ class Prefs {
   val OLD_PROGRESS = "simpleoldprogress"
   val DIRECTION = "simpledrive"
 
-  var context: Context? = null
+  var context: Context
   val directionMap: Map<Int, Direction>
-  var prefs: SharedPreferences? = null;
+  var prefs: SharedPreferences
 
   var prefCounter: Int
-    get() = prefs!!.getInt(COUNTER_VALUE, 0)
-    set(value) = prefs!!.edit().putInt(COUNTER_VALUE, value).apply()
+    get() = prefs.getInt(COUNTER_VALUE, 0)
+    set(value) = prefs.edit().putInt(COUNTER_VALUE, value).apply()
 
   var prefCurrentProgress: Int
-    get() = prefs!!.getInt(CURRENT_PROGRESS, 0)
-    set(value) = prefs!!.edit().putInt(CURRENT_PROGRESS, value).apply()
+    get() = prefs.getInt(CURRENT_PROGRESS, 0)
+    set(value) = prefs.edit().putInt(CURRENT_PROGRESS, value).apply()
 
   var prefOldProgress: Int
-    get() = prefs!!.getInt(OLD_PROGRESS, 0)
-    set(value) = prefs!!.edit().putInt(OLD_PROGRESS, value).apply()
+    get() = prefs.getInt(OLD_PROGRESS, 0)
+    set(value) = prefs.edit().putInt(OLD_PROGRESS, value).apply()
 
   var prefDirection: Direction
-    get() = directionMap.get(prefs!!.getInt(DIRECTION, DIRECTION_FROM_LEFT_TO_RIGHT))!!
+    get() = directionMap.get(prefs.getInt(DIRECTION, DIRECTION_FROM_LEFT_TO_RIGHT))!!
     set(value) =
       if (value == FROM_RIGHT_TO_LEFT) {
-        prefs!!.edit().putInt(DIRECTION, DIRECTION_FROM_RIGHT_TO_LEFT).apply()
+        prefs.edit().putInt(DIRECTION, DIRECTION_FROM_RIGHT_TO_LEFT).apply()
       } else {
-        prefs!!.edit().putInt(DIRECTION, DIRECTION_FROM_LEFT_TO_RIGHT).apply()
+        prefs.edit().putInt(DIRECTION, DIRECTION_FROM_LEFT_TO_RIGHT).apply()
       }
 
 }
