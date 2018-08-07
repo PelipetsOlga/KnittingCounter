@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -18,13 +19,39 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/counter_row"
         />
+
     <TextView
         android:id="@+id/tv_counter"
+        android:paddingEnd="32dp"
         android:text="0"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent"
         style="@style/counter_row"
         />
+    <ImageView
+        android:id="@+id/arrow_forward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_arrow_forward"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_counter"
+        app:layout_constraintStart_toEndOf="@id/tv_counter"
+        app:layout_constraintTop_toTopOf="@+id/tv_counter"
+        />
+
+    <ImageView
+        android:id="@+id/arrow_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_arrow_back"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_counter"
+        app:layout_constraintStart_toEndOf="@id/tv_counter"
+        app:layout_constraintTop_toTopOf="@+id/tv_counter"
+        />
+
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="match_parent"
@@ -73,6 +100,5 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_set_zero"
         style="@style/button_style"
         />
-
   </android.support.constraint.ConstraintLayout>
 </ScrollView>

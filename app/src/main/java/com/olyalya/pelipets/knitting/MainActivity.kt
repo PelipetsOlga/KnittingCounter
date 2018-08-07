@@ -2,6 +2,8 @@ package com.olyalya.pelipets.knitting
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
@@ -9,14 +11,27 @@ import com.olyalya.pelipets.knitting.Direction.FROM_LEFT_TO_RIGHT
 import com.olyalya.pelipets.knitting.Direction.FROM_RIGHT_TO_LEFT
 
 class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
-  val LEFT_EDGE = 20
-  val RIGHT_EDGE = 80
+  val LEFT_EDGE = 10
+  val RIGHT_EDGE = 90
   var currentProgress = 0
   var counter: Int = 0
   var seekBarView: SeekBar? = null
   var tvCounter: TextView? = null
-  var direction = Direction.FROM_LEFT_TO_RIGHT
+  var arrowForward: ImageView? = null
+  var arrowBack: ImageView? = null
   var oldProgress = 0
+  var direction = FROM_LEFT_TO_RIGHT
+
+  private fun setArrowView(value: Direction) {
+    this.direction=value
+    if (value == FROM_LEFT_TO_RIGHT) {
+      arrowForward?.setVisibility(View.VISIBLE)
+      arrowBack?.setVisibility(View.GONE)
+    } else {
+      arrowForward?.setVisibility(View.GONE)
+      arrowBack?.setVisibility(View.VISIBLE)
+    }
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -24,6 +39,8 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
 
     seekBarView = findViewById(R.id.seekBar)
     tvCounter = findViewById(R.id.tv_counter)
+    arrowForward = findViewById(R.id.arrow_forward)
+    arrowBack = findViewById(R.id.arrow_back)
     seekBarView!!!!.setOnSeekBarChangeListener(this);
   }
 
@@ -33,6 +50,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
     currentProgress = App.prefs!!.prefCurrentProgress
     oldProgress = App.prefs!!.prefOldProgress
     direction = App.prefs!!.prefDirection
+    setArrowView(direction)
     tvCounter?.setText(counter.toString())
     seekBarView?.setProgress(currentProgress)
   }
@@ -61,7 +79,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
         if (newProgress!! > RIGHT_EDGE) {
           oldProgress = 100
           seekBarView?.setProgress(oldProgress)
-          direction = FROM_RIGHT_TO_LEFT
+          setArrowView(FROM_RIGHT_TO_LEFT)
           counter++
           tvCounter?.setText(counter.toString())
           currentProgress = 100
@@ -78,7 +96,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
         if (newProgress < LEFT_EDGE) {
           oldProgress = 0
           seekBarView?.setProgress(oldProgress)
-          direction = FROM_LEFT_TO_RIGHT
+          setArrowView(FROM_LEFT_TO_RIGHT)
           counter++
           tvCounter?.setText(counter.toString())
           currentProgress = 0
