@@ -22,4 +22,9 @@
     <item name="android:layout_marginBottom">8dp</item>
   </style>
 
+  <style name="CustomSeekBar" parent="Widget.AppCompat.SeekBar">
+    <item name="android:progressDrawable">@drawable/custom_seekbar</item>
+    <item name="android:thumbOffset">0dip</item>
+  </style>
+
 </resources>
