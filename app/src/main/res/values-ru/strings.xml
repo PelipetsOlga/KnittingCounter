@@ -1,0 +1,14 @@
+<resources>
+  <string name="app_name">Счетчик для вязания</string>
+  <string name="tv_counter">Счетчик:</string>
+  <string name="set_counter">Установить счетчик</string>
+  <string name="_1">-1</string>
+  <string name="set_0">Установить 0</string>
+  <string name="change_side">Поменять сторону</string>
+  <string name="dialog_title">Установить счетчик</string>
+  <string name="dialog_message">Введите новое значение</string>
+  <string name="btn_save">Сохранить</string>
+  <string name="btn_cancel">Отмена</string>
+  <string name="menu_rate">Оцените нас</string>
+  <string name="menu_exit">Выход</string>
+</resources>
