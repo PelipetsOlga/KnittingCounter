@@ -1,9 +1,12 @@
 package com.olyalya.pelipets.knitting
 
+import android.content.ActivityNotFoundException
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -14,6 +17,8 @@ import android.widget.TextView
 import com.olyalya.pelipets.knitting.Direction.FROM_LEFT_TO_RIGHT
 import com.olyalya.pelipets.knitting.Direction.FROM_RIGHT_TO_LEFT
 import java.lang.Integer.parseInt
+import android.content.Intent
+import android.net.Uri
 
 class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
   val LEFT_EDGE = 10
@@ -221,5 +226,29 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
   private fun setCounterView(newCounter: Int) {
     counter = newCounter
     updateCounterView()
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu, menu)
+    return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    when (item?.itemId) {
+      R.id.menu_rate -> {
+        try {
+          val intent = Intent(Intent.ACTION_VIEW)
+          intent.data = Uri.parse("market://details?id=com.olyalya.pelipets.knitting")
+          startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+        }
+        return true
+      }
+      R.id.menu_exit -> {
+        this.finish()
+        return true
+      }
+      else -> return super.onOptionsItemSelected(item)
+    }
   }
 }
