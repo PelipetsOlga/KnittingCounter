@@ -1,15 +1,19 @@
 package com.olyalya.pelipets.knitting
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.view.View
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import com.olyalya.pelipets.knitting.Direction.FROM_LEFT_TO_RIGHT
 import com.olyalya.pelipets.knitting.Direction.FROM_RIGHT_TO_LEFT
+import java.lang.Integer.parseInt
 
 class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
   val LEFT_EDGE = 10
@@ -52,6 +56,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
     btnChangeSide = findViewById(R.id.btn_change_side)
 
     seekBarView?.setOnSeekBarChangeListener(this);
+    btnSetCounter?.setOnClickListener { showDialog() }
     btnSetZero?.setOnClickListener { setCounterToZero() }
     btnMinusOne?.setOnClickListener { minusOne() }
     btnChangeSide?.setOnClickListener { changeSide() }
@@ -62,7 +67,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
     oldProgress = 0
     currentProgress = 0
     direction = FROM_LEFT_TO_RIGHT
-    tvCounter?.setText(counter.toString())
+    updateCounterView()
     setOldProgressToSeekBar()
   }
 
@@ -73,13 +78,13 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
         oldProgress = 100
         setOldProgressToSeekBar()
         direction = FROM_RIGHT_TO_LEFT
-        tvCounter?.setText(counter.toString())
+        updateCounterView()
       } else if (seekBarView?.getProgress() == 100) {
         counter--
         oldProgress = 0
         setOldProgressToSeekBar()
         direction = FROM_LEFT_TO_RIGHT
-        tvCounter?.setText(counter.toString())
+        updateCounterView()
       } else {
         if (direction == FROM_LEFT_TO_RIGHT) {
           oldProgress = 0
@@ -117,7 +122,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
     currentProgress = App.prefs!!.prefCurrentProgress
     oldProgress = App.prefs!!.prefOldProgress
     direction = App.prefs!!.prefDirection
-    tvCounter?.setText(counter.toString())
+    updateCounterView()
     seekBarView?.setProgress(currentProgress)
   }
 
@@ -147,7 +152,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
           setOldProgressToSeekBar()
           direction = FROM_RIGHT_TO_LEFT
           counter++
-          tvCounter?.setText(counter.toString())
+          updateCounterView()
           currentProgress = 100
         } else {
           oldProgress = newProgress
@@ -164,7 +169,7 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
           setOldProgressToSeekBar()
           direction = FROM_LEFT_TO_RIGHT
           counter++
-          tvCounter?.setText(counter.toString())
+          updateCounterView()
           currentProgress = 0
         } else {
           oldProgress = newProgress
@@ -177,7 +182,44 @@ class MainActivity : AppCompatActivity(), OnSeekBarChangeListener {
     }
   }
 
+  private fun updateCounterView() {
+    tvCounter?.setText(counter.toString())
+  }
+
   private fun setOldProgressToSeekBar() {
     seekBarView?.setProgress(oldProgress)
+  }
+
+  private fun showDialog() {
+    val dialogBuilder = AlertDialog.Builder(this)
+    val inflater = this.layoutInflater
+    val dialogView = inflater.inflate(R.layout.custom_dialog, null)
+    dialogBuilder.setView(dialogView)
+
+    val editText = dialogView.findViewById<View>(R.id.et_counter) as EditText
+
+    dialogBuilder.setTitle(R.string.dialog_title)
+    dialogBuilder.setMessage(R.string.dialog_message)
+    dialogBuilder.setPositiveButton(R.string.btn_save, { dialog, whichButton ->
+      var newCounter = -1
+      if (!TextUtils.isEmpty(editText.getText().toString())) {
+        try {
+          newCounter = parseInt(editText.getText().toString())
+        } catch (e: NumberFormatException) {
+        }
+        if (newCounter > -1) {
+          setCounterView(newCounter)
+        }
+      }
+    })
+    dialogBuilder.setNegativeButton(R.string.btn_cancel, { dialog, whichButton ->
+    })
+    val b = dialogBuilder.create()
+    b.show()
+  }
+
+  private fun setCounterView(newCounter: Int) {
+    counter = newCounter
+    updateCounterView()
   }
 }

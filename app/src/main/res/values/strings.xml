@@ -5,4 +5,10 @@
   <string name="_1">-1</string>
   <string name="set_0">Set 0</string>
   <string name="change_side">Change side</string>
+  <string name="dialog_title">Set counter</string>
+  <string name="dialog_message">Enter new value</string>
+  <string name="btn_save">Save</string>
+  <string name="btn_cancel">Cancel</string>
+  <string name="menu_rate">Rate us</string>
+  <string name="menu_exit">Exit</string>
 </resources>
